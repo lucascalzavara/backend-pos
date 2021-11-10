@@ -1,1 +1,1 @@
-# Códigos do ESP8266 e python
+# Códigos do Esp32Cam e python
