@@ -11,7 +11,7 @@ def capturarImagem():
     return response
 
 def obterImagem():
-    api_url = url + "http://192.168.15.17/foto-salva"
+    api_url = url + "/foto-salva"
     response = requests.get(api_url)
     
     if response.status_code == 200:
@@ -20,4 +20,4 @@ def obterImagem():
 
     return response
 
-obterImagem()
+capturarImagem()
