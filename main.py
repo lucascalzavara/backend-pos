@@ -1,4 +1,8 @@
 from flask import Flask
+import processamento as process
+import cv2
+import webapi
+
 app = Flask(__name__)
 @app.route('/')
 def hello_world():
@@ -6,4 +10,12 @@ def hello_world():
 
 @app.route('/capturarImagen')
 def capturarImagen():
-    return 'teste'
+    webapi.capturarImagem()
+    # delay
+    imagem = webapi.obterImagem().content
+    
+    im_cicles, qtd = process.contar(imagem)
+    return {
+        'im_cicles': im_cicles,
+        'qtd_ovos': qtd
+    }
