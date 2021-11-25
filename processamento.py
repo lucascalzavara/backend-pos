@@ -1,12 +1,12 @@
 import cv2
 from PIL import Image
 import imutils
-# import imFerramentas as imF
+import numpy as np
 
-def contar(im):
-    image = Image.fromarray(im);
+def contar(image):
+
     imr = image[:,:,2]
-    # mask = cv2.bitwise_not(imF.limiarizacao(imr,70))
+    
     ret,mask = cv2.threshold(imr,70,255,cv2.THRESH_BINARY_INV)
 
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -38,4 +38,10 @@ def contar(im):
         center_coordinates = (cX, cY) 
         image_circles = image = cv2.circle(image_circles, center_coordinates, radius, color, thickness)
 
-    return image_circles.tostring(), len(cnts)
+    return image_circles, len(cnts)
+
+
+def toByteArray(image):
+    is_success, im_buf_arr = cv2.imencode(".jpg", image)
+    byte_im = im_buf_arr.tobytes()
+    return byte_im

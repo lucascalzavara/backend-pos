@@ -1,6 +1,6 @@
 from pip._vendor import requests
 
-url = "http://192.168.15.17"
+url = "http://192.168.15.14"
 
 def capturarImagem():
     api_url = url + "/capturar-foto"
@@ -12,12 +12,10 @@ def capturarImagem():
 
 def obterImagem():
     api_url = url + "/foto-salva"
-    response = requests.get(api_url)
+    response = requests.get(api_url, stream=True)
     
     if response.status_code == 200:
         with open("fotos-capturadas/image.jpg", 'wb') as f:
             f.write(response.content)
 
-    return response
-
-capturarImagem()
+    return response.content

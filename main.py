@@ -2,20 +2,33 @@ from flask import Flask
 import processamento as process
 import cv2
 import webapi
+import time
 
 app = Flask(__name__)
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
 
-@app.route('/capturarImagen')
-def capturarImagen():
+@app.route('/capturarFoto')
+def capturarFoto():
     webapi.capturarImagem()
-    # delay
-    imagem = webapi.obterImagem().content
-    
-    im_cicles, qtd = process.contar(imagem)
-    return {
-        'im_cicles': im_cicles,
-        'qtd_ovos': qtd
-    }
+    time.sleep(10) # em segundos, para esperar a captura da imagem
+    return "OK"
+
+@app.route('/getFoto')
+def getFoto():
+    image = cv2.imread("fotos-capturadas/image.jpg")
+    byte_im = process.toByteArray(image)
+    return byte_im;
+
+
+@app.route('/getFotoProcessada')
+def getFotoProcessada():
+    image = cv2.imread("fotos-capturadas/image.jpg")
+    im_cicles, qtd = process.contar(image)
+    byte_im = process.toByteArray(im_cicles)
+    return byte_im;
+
+
+@app.route('/getQtdOvos')
+def getQtdOvos():
+    image = cv2.imread("fotos-capturadas/image.jpg")
+    im_cicles, qtd = process.contar(image)
+    return str(qtd);
