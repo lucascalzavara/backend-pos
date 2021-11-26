@@ -7,7 +7,9 @@ def contar(image):
 
     imr = image[:,:,2]
     
-    ret,mask = cv2.threshold(imr,70,255,cv2.THRESH_BINARY_INV)
+    ret,mask = cv2.threshold(imr,60,255,cv2.THRESH_BINARY_INV)
+
+    mask = cv2.medianBlur(mask, 5)
 
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)

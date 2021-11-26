@@ -11,11 +11,13 @@ CORS(app)
 @app.route('/capturarFoto')
 def capturarFoto():
     webapi.capturarImagem()
-    time.sleep(10) # em segundos, para esperar a captura da imagem
+    time.sleep(30) # em segundos, para esperar a captura da imagem
+    webapi.obterImagem()
     return "OK"
 
 @app.route('/getFoto')
 def getFoto():
+
     image = cv2.imread("fotos-capturadas/image.jpg")
     byte_im = process.toByteArray(image)
     return byte_im;
